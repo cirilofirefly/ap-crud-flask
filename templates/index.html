@@ -5,27 +5,29 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Home</title>
+    <link href= "{{ url_for('static',filename='styles/mainpage.css') }}" rel="stylesheet">
 </head>
 
 <body>
     {% if 'loggedin' not in session %}
-    <script language="javascript" type="text/javascript">
-        window.history.forward();
-    </script>
-    <a href="/login">Login</a>
-    <br>
-    <a href="/register">Register</a>
-    <br>
-    Not logged in
+        <script language="javascript" type="text/javascript">
+            window.history.forward();
+        </script>
+        <a href="/login">Login</a>
+        <br>
+        <a href="/register">Register</a>
+        <br>
+        Not logged in
     {% endif %}
 
     {% if 'loggedin' in session %}
-    <script language="javascript" type="text/javascript">
-        window.history.forward();
-    </script>
-    <a href="/logout">Logout</a>
-    Welcome {{ session['username'] }}
+        <script language="javascript" type="text/javascript">
+            window.history.forward();
+        </script>
+
+        <a href="/logout" class="text-green-400">Logout</a>
+        Welcome {{ session['username'] }}
     {% endif %}
 </body>
 </html>

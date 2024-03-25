@@ -1,0 +1,9 @@
+{
+  "devDependencies": {
+    "tailwindcss": "^3.4.1"
+  },
+  "dependencies": {
+    "@tailwindcss/forms": "^0.5.7",
+    "tailwind-fontawesome": "^0.6.0"
+  }
+}

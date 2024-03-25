@@ -1,16 +1,17 @@
-from flask import Flask, render_template, session, request
+from flask import Flask, render_template, session, request, redirect, flash
 from flaskext.mysql import MySQL
+from flask_bcrypt import Bcrypt
 import pymysql
 
 mysql = MySQL()
 app = Flask(__name__, template_folder ='templates')
 app.secret_key = 'secretkey'
+bcrypt = Bcrypt(app)
 
 app.config['MYSQL_DATABASE_USER'] = 'cirilo'
 app.config['MYSQL_DATABASE_DB'] = 'crud'
 app.config['MYSQL_DATABASE_PASSWORD'] = 'CattoMysql@2024!'
 app.config['MYSQL_DATABASE_HOST'] = 'localhost'
-
 mysql.init_app(app)
 
 @app.route('/')
@@ -34,7 +35,7 @@ def login():
             session['username'] = user['username']
             return render_template('index.html', msg=text)
         else:
-            text = 'Incorrect username/password!'
+            text = 'Incorrect username or password!'
 
     elif request.method == 'POST':
         text = "Fill in the forms"
@@ -69,7 +70,12 @@ def logout():
    session.pop('loggedin', None)
    session.pop('id', None)
    session.pop('username', None)
-   return render_template('index.html')
+   flash('Logged out', 'success')
+   return redirect('/')
+
+@app.errorhandler(404)
+def page_not_found(error):
+    return render_template('page_not_found.html'), 404
 
 if __name__ == '__main__':
     app.run(debug=True)
